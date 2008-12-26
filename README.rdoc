@@ -1,7 +1,7 @@
 = FriendlyId
 
 FriendlyId is the "Swiss Army bulldozer" of slugging and permalink plugins for
-Ruby on Rails. It allows you to create pretty URL's and work with
+Ruby on Rails. It allows you to create pretty URL's that work with
 human-friendly strings as if they were numeric ids for ActiveRecord models.
 
 Using FriendlyId, it's easy to make your application use URL's like:
@@ -18,7 +18,7 @@ Rubyforge[http://www.rubyforge.org].
 
 === Why?
 
-* Text-based id's look better
+* Text-based id's look better.
 * They make URL's easier to remember.
 * They give no hint about the number of records in your database.
 * They are better for search engine optimization.
@@ -161,7 +161,6 @@ FriendlyId can generate unique slugs within a given scope. For example:
   Restaurant.find("joes-diner", :scope => "chicago") # returns 1 record
   Restaurant.find("joes-diner") # returns both records
 
-
 The value for the :scope key in your model can be a custom method you define,
 or the name of a relation. If it's the name of a relation, then the scope's
 text value will be the result of calling <code>to_param</code> on the related
@@ -209,34 +208,41 @@ that uses a non-Roman writing system, your feedback would be most welcome.
   @post2 = Post.create(:title => "友好编号在中国")
   @post2.friendly_id # "友好编号在中国--2"
 
+== Requirements
+
+FriendlyId currently works with Rails 2.0.0 and higher.
+
 == Getting it
 
-FriendlyId is installed as a Ruby Gem:
+FriendlyId can be easily installed as a Ruby Gem:
 
-  gem install friendly_id
+  $ [sudo] gem install friendly_id
 
 Alternatively, you can install it as a Rails plugin, though this is
 discouraged:
 
-./script/plugin install git://github.com/norman/friendly_id.git
+  $ ruby /script/plugin install git://github.com/norman/friendly_id.git
 
 == Setting it up
 
-FriendlyId currently works with Rails 2.0.0 and higher. Here's how to set it up.
+Here's how to set it up when used as Gem:
 
 1) Install the Gem:
 
-  sudo gem install friendly_id
-  cd my_app
-  script/generate friendly_id
-  rake db:migrate
+  $ [sudo] gem install friendly_id
+  $ cd my_app
 
-2) Load FriendlyId in your app:
+optionaly if you are planning to use slugged models:
 
-  # Rails 2.1 and higher; add this to the gem section of environment.rb:
+  $ script/generate friendly_id
+  $ rake db:migrate
+
+2) Load FriendlyId in your app, modify your config/environment.rb file:
+
+  # Rails 2.1 and higher; add this to the gem section.
   config.gem "friendly_id"
 
-  # Rails 2.0; this goes at the bottom of environment.rb
+  # Rails 2.0; this goes at the bottom.
   require 'friendly_id'
 
 3) Add some code to your models:
@@ -248,16 +254,16 @@ FriendlyId currently works with Rails 2.0.0 and higher. Here's how to set it up.
 4) If you are using slugs, you can use a Rake task to generate slugs for your
 existing records:
 
-friendly_id:make_slugs MODEL=MyModelName
+  $ friendly_id:make_slugs MODEL=MyModelName
 
 If you eventually want to expire old slugs every so often, or perhaps every
 day via cron, you can do:
-
-rake:friendly_id:remove_old_slugs
+ 
+  $ rake:friendly_id:remove_old_slugs
 
 The default is to remove dead slugs older than 45 days, but is configurable:
 
-rake:friendly_id:remove_old_slugs MODEL=MyModelName DAYS=60
+  $ rake:friendly_id:remove_old_slugs MODEL=MyModelName DAYS=60
 
 == Upgrading from an older version
 
@@ -266,30 +272,30 @@ follow these steps:
 
 ==== Install the friendly_id Gem:
 
-  sudo gem install friendly_id
+  $ [sudo] gem install friendly_id
 
-==== Add FriendlyId to environment.rb:
+==== Add FriendlyId to config/environment.rb:
 
-===== For Rails 2.1 and higher:
-
+  # Rails 2.1 and higher; add this to the gem section:
   config.gem "friendly_id", :version => ">= 2.0.0"
 
-===== For Rails 2.0:
-
-Add this to the bottom of environment.rb:
-
+  # Rails 2.0; this goes at the bottom:
   require 'friendly_id'
 
 ==== Remove the older version of FriendlyId:
 
-  git rm -rf vendor/plugins/friendly_id
-  svn delete vendor/plugins/friendly_id
-  # or whatever
+If you have installed FriendlyId as a plugin into your Rails application:
+
+  $ git rm -rf vendor/plugins/friendly_id
+  $ svn delete vendor/plugins/friendly_id
+  $ bzr rm vendor/plugins/friendly_id
+
+Or whatever vodoo your SCM provides
 
 ====  Generate the upgrade migration and run it
 
-  ./script generate friendly_id_20_upgrade
-  rake db:migrate
+  $ ruby script/generate friendly_id_20_upgrade
+  $ rake db:migrate
 
 That's it!
 
@@ -301,7 +307,6 @@ we love pull requests. :-)
 == Bugs:
 
 Please report them on Lighthouse[http://randomba.lighthouseapp.com/projects/14675-friendly_id].
-
 
 == Credits:
 
